@@ -13,7 +13,7 @@ License:           GPL v2
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 Tags:              contact form 7, wpcf7, bootstrap, bootstrap 3, bootstrap framework, addon, css framework, contact form 7 addon, contact form, cf7bs, css
 
-This plugin modifies the output of the popular Contact Form 7 plugin to be fully compatible with WordPress themes using the Bootstrap CSS framework - no additional styling required.
+This plugin modifies the output of the popular Contact Form 7 plugin to be styled in compliance with themes using the Bootstrap CSS framework.
 
 == Description ==
 

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Bootstrap for Contact Form 7
 Plugin URI: http://wordpress.org/plugins/bootstrap-for-contact-form-7/
-Description: This plugin modifies the output of the popular Contact Form 7 plugin to be fully compatible with WordPress themes using the Bootstrap CSS framework - no additional styling required.
+Description: This plugin modifies the output of the popular Contact Form 7 plugin to be styled in compliance with themes using the Bootstrap CSS framework.
 Version: 1.0.0
 Author: Felix Arntz
 Author URI: http://leaves-and-love.net
