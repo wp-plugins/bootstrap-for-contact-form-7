@@ -90,3 +90,7 @@ If you're a developer and you have some ideas to improve the plugin or to solve 
 
 = 1.0.0 =
 * First stable version
+
+== Upgrade Notice ==
+
+The current version of Bootstrap for Contact Form 7 requires WordPress 3.6 or higher.
