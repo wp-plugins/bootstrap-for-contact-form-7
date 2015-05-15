@@ -8,8 +8,8 @@ Donate link:       http://leaves-and-love.net/wordpress-plugins/
 Contributors:      flixos90
 Requires at least: 3.6 
 Tested up to:      4.2
-Stable tag:        1.1.0
-Version:           1.1.0
+Stable tag:        1.1.1
+Version:           1.1.1
 License:           GPL v2 
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 Tags:              contact form 7, wpcf7, bootstrap, bootstrap 3, bootstrap framework, addon, css framework, contact form 7 addon, contact form, cf7bs, css
@@ -20,7 +20,8 @@ This plugin modifies the output of the popular Contact Form 7 plugin to be style
 
 Bootstrap for Contact Form 7 modifies all the output of the popular [Contact Form 7 plugin](https://wordpress.org/plugins/contact-form-7/) to be fully compatible with the current version 3 of the popular CSS framework [Bootstrap](http://getbootstrap.com/). What this means to you as a Bootstrap user: No additional CSS rules necessary - from now on, Contact Form 7 integrates seamlessly with the overall Bootstrap design. It is even possible to use different form layouts via an easy-to-use filter.
 
-**This plugin is actually an addon to another plugin, so it requires Contact Form 7 to work. Furthermore you have to be using it in conjunction with a Bootstrap-based WordPress theme, otherwise the forms might look weird.**
+> <strong>This plugin is an addon to Contact Form 7.</strong><br>
+> The plugin requires Contact Form 7 to be activated, otherwise it won't change anything. Furthermore you should be using it in conjunction with a Bootstrap-based WordPress theme, otherwise the forms might look weird (and there would be no point in using this addon anyway).
 
 = Usage =
 
@@ -77,6 +78,10 @@ While the option to display radio and checkbox labels before the actual input fi
 
 Bootstrap for Contact Form 7 is an (inofficial) addon to Contact Form 7. You must have the plugin installed to see any changes. Furthermore you should only use this plugin if your theme is based on the CSS framework Bootstrap.
 
+= Where should I submit my support request? =
+
+I preferably take support requests as [issues on Github](https://github.com/felixarntz/bootstrap-for-contact-form-7/issues), so I would appreciate if you created an issue for your request there. However, if you don't have an account there and do not want to sign up, you can of course use the [wordpress.org support forums](https://wordpress.org/support/plugin/bootstrap-for-contact-form-7) as well.
+
 = How can I contribute to the plugin? =
 
 If you're a developer and you have some ideas to improve the plugin or to solve a bug, feel free to raise an issue or submit a pull request in the [Github repository for the plugin](https://github.com/felixarntz/bootstrap-for-contact-form-7).
@@ -88,6 +93,12 @@ If you're a developer and you have some ideas to improve the plugin or to solve 
 3. A warning alert as displayed by Bootstrap for Contact Form 7
 
 == Changelog ==
+
+= 1.1.1 =
+* Fixed: exclusive option for checkbox now working
+* Fixed: default option for radio/checkbox now working
+* Fixed: PHP notice for radio/checkbox with only one option
+* Fixed: Captcha not valid message now only shows up once as it is supposed to
 
 = 1.1.0 =
 * Added: new attribute 'align' can be added to the submit button

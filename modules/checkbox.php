@@ -1,7 +1,7 @@
 <?php
 /**
  * @package CF7BS
- * @version 1.1.0
+ * @version 1.1.1
  * @author Felix Arntz <felix-arntz@leaves-and-love.net>
  */
 
@@ -77,10 +77,25 @@ function cf7bs_checkbox_shortcode_handler( $tag )
   }
 
   $defaults = array();
+
+  $default_choice = $tag->get_default_option( null, 'multiple=1' );
+
+  foreach( $default_choice as $value )
+  {
+    $key = array_search( $value, $values, true );
+
+    if( false !== $key )
+    {
+      $defaults[] = (int) $key + 1;
+    }
+  }
+
   if( $matches = $tag->get_first_match_option( '/^default:([0-9_]+)$/' ) )
   {
-    $defaults = explode( '_', $matches[1] );
+    $defaults = array_merge( $defaults, explode( '_', $matches[1] ) );
   }
+
+  $defaults = array_unique( $defaults );
 
   $options = array();
   $checked = '';
@@ -152,7 +167,7 @@ function cf7bs_checkbox_shortcode_handler( $tag )
   $field = new CF7BS_Form_Field( array(
     'name'              => $tag->name,
     'id'                => $tag->get_option( 'id', 'id', true ),
-    'class'             => $tag->get_class_option( $class ),
+    'class'             => '',
     'type'              => $tag->basetype,
     'value'             => $checked,
     'label'             => $tag->content,
@@ -166,7 +181,7 @@ function cf7bs_checkbox_shortcode_handler( $tag )
     'mode'              => $mode,
     'status'            => $status,
     'tabindex'          => $tag->get_option( 'tabindex', 'int', true ),
-    'wrapper_class'     => $tag->name,
+    'wrapper_class'     => $tag->get_class_option( $class . ' ' . $tag->name ),
   ) );
 
   $html = $field->display( false );
