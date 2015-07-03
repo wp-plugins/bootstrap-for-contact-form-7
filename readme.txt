@@ -8,8 +8,8 @@ Donate link:       http://leaves-and-love.net/wordpress-plugins/
 Contributors:      flixos90
 Requires at least: 3.6 
 Tested up to:      4.2
-Stable tag:        1.1.1
-Version:           1.1.1
+Stable tag:        1.2.0
+Version:           1.2.0
 License:           GPL v2 
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 Tags:              contact form 7, wpcf7, bootstrap, bootstrap 3, bootstrap framework, addon, css framework, contact form 7 addon, contact form, cf7bs, css
@@ -53,18 +53,22 @@ When using a well-known framework which provides general styles for all the impo
 
 To modify the layout (or one of the other six form properties), you need to use the filter `'cf7bs_form_' . $form_id . '_properties'` where `$form_id` must be the ID of the form you'd like to modify. You find this number in the form shortcode. An array is passed to the function you specify, containing entries with the following keys:
 
-* `layout` - possible values: default, inline, horizontal; default value: default
-* `label_width` - possible values: any integer between 1 and 11; default value: 3
-* `breakpoint` - possible values: xs, sm, md, lg; default value: sm
-* `size` - possible values: default, small, large; default value: default
-* `required_html` - possible values: any HTML output to append to labels for required fields; default value: `<span class="required">*</span>`
-* `group_layout` - possible values: default, inline, buttons; default value: default
-* `group_type` - possible values: default, primary, success, info, warning, danger; default value: default
-* `submit_type` - possible values: default, primary, success, info, warning, danger; default value: primary
+* `layout` - adjusts the form's layout; possible values: default, inline, horizontal; default value: default
+* `label_width` - adjusts the form's label width (applies only to horizontal layout); possible values: any integer between 1 and 11; default value: 3
+* `breakpoint` - adjusts the responsive breakpoint (applies only to horizontal layout); possible values: xs, sm, md, lg; default value: sm
+* `size` - adjusts the size of all input fields; possible values: default, small, large; default value: default
+* `required_html` - adjusts the HTML output to append to required fields' labels; possible values: any HTML output; default value: `<span class="required">*</span>`
+* `group_layout` - adjusts the layout of checkbox and radio groups; possible values: default, inline, buttons; default value: default
+* `group_type` - adjusts the color of checkbox and radio groups with buttons layout; possible values: default, primary, success, info, warning, danger; default value: default
+* `submit_type` - adjusts the color of the submit button; possible values: default, primary, success, info, warning, danger; default value: primary
 
 So if you need to change the layout to a horizontal one, the function can look like this: `function yourfunction( $properties ) { $properties['layout'] = 'horizontal'; return $properties; }`
 
 You could also modify the default form properties (affecting every form on your site) by using the filter `cf7bs_default_form_properties`.
+
+= How do I use the input group feature of Bootstrap? =
+
+All textual input fields support the input group feature that Bootstrap provides. To use it, add an attribute `input_before` and/or `input_after` to any text / email / url / tel input (for example `[text* twitter-username input_before:@]Your Twitter Handle[/text*]`).
 
 = Why do my labels always appear in a separate line? =
 
@@ -93,6 +97,19 @@ If you're a developer and you have some ideas to improve the plugin or to solve 
 3. A warning alert as displayed by Bootstrap for Contact Form 7
 
 == Changelog ==
+
+= 1.2.0 =
+* Added: new CF7 count shortcode is now supported
+* Enhanced: form properties can now be modified without any code (i.e. without a filter); the properties can be defined in the new "Additional Settings" tab of Contact Form 7
+* Enhanced: textual inputs now support Bootstrap's input group feature
+* Enhanced: checkbox and radio types can now show an actual label; it is only used as the checkbox label if no option is provided
+* Tweaked: plugin now adheres to WordPress Coding Standards
+* Fixed: improved display method for captcha images
+* Fixed: textarea row attribute now honored
+* Fixed: free_text attribute on checkbox and radio types now honored
+* Fixed: form attribute 'group_type' now honored
+* Fixed: additional CF7 styles are now outputted in the head
+* Fixed: check if CF7 functions are available before calling them
 
 = 1.1.1 =
 * Fixed: exclusive option for checkbox now working
