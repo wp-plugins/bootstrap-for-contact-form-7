@@ -1,7 +1,7 @@
 <?php
 /**
  * @package CF7BS
- * @version 1.2.0
+ * @version 1.2.1
  * @author Felix Arntz <felix-arntz@leaves-and-love.net>
  */
 
@@ -23,11 +23,11 @@ class CF7BS_Form_Field extends CF7BS_Component {
 				$input_div_class = '';
 				$input_class = $class;
 				if ( 'horizontal' == $form_layout ) {
-					$classes = $this->get_column_width_classes( $form_label_width, $form_breakpoint );
+					$classes = $this->get_column_width_classes( $form_label_width, $form_breakpoint, $grid_columns );
 					$label_class .= ' ' . $classes['label'];
 					$input_div_class = $classes['input'];
 					if ( empty( $label ) ) {
-						$input_div_class .= ' ' . $this->get_column_offset_class( $form_label_width, $form_breakpoint );
+						$input_div_class .= ' ' . $this->get_column_offset_class( $form_label_width, $form_breakpoint, $grid_columns );
 					}
 				} elseif( 'inline' == $form_layout ) {
 					if ( empty( $placeholder ) ) {
@@ -75,7 +75,13 @@ class CF7BS_Form_Field extends CF7BS_Component {
 					$readonly = '';
 				}
 
-				if ( $maxlength > -1 && !empty( $maxlength ) ) {
+				if ( $minlength && $minlength > 0 ) {
+					$minlength = ' minlength="' . absint( $minlength ) . '"';
+				} else {
+					$minlength = '';
+				}
+
+				if ( $maxlength && $maxlength > -1 ) {
 					$maxlength = ' maxlength="' . absint( $maxlength ) . '"';
 				} else {
 					$maxlength = '';
@@ -270,9 +276,17 @@ class CF7BS_Form_Field extends CF7BS_Component {
 					}
 					break;
 				case 'textarea':
-					$output .= '<textarea' . $input_class . ( ! empty( $id ) ? ' id="' . esc_attr( $id ) . '"' : '' ) . ' name="' . esc_attr( $name ) . '" rows="' . absint( $rows ) . '"' . $placeholder . $readonly . $tabindex . $append . '>';
+					if ( ! empty( $input_before ) && 'inline' != $form_layout ) {
+						$input_before_class = trim( str_replace( 'input-group-addon', '', $input_before_class ) );
+						$output .= '<p class="text-right' . ( ! empty( $input_before_class ) ? ' ' . $input_before_class : '' ) . '">' . $input_before . '</p>';
+					}
+					$output .= '<textarea' . $input_class . ( ! empty( $id ) ? ' id="' . esc_attr( $id ) . '"' : '' ) . ' name="' . esc_attr( $name ) . '" rows="' . absint( $rows ) . '"' . $placeholder . $readonly . $minlength . $maxlength . $tabindex . $append . '>';
 					$output .= esc_textarea( $value );
 					$output .= '</textarea>';
+					if ( ! empty( $input_after ) && 'inline' != $form_layout ) {
+						$input_after_class = trim( str_replace( 'input-group-addon', '', $input_after_class ) );
+						$output .= '<p class="text-right' . ( ! empty( $input_after_class ) ? ' ' . $input_after_class : '' ) . '">' . $input_after . '</p>';
+					}
 					break;
 				case 'file':
 					$output .= '<input' . $input_class . ( ! empty( $id ) ? ' id="' . esc_attr( $id ) . '"' : '' ) . ' name="' . esc_attr( $name ) . '" type="file"' . $tabindex . $append . '>';
@@ -328,7 +342,7 @@ class CF7BS_Form_Field extends CF7BS_Component {
 							}
 						}
 
-						$output .= '<input' . $input_class . ( ! empty( $id ) ? ' id="' . esc_attr( $id ) . '"' : '' ) . ' name="' . esc_attr( $name ) . '" type="' . esc_attr( $type ) . '" value="' . esc_attr( $value ) . '"' . $placeholder . $readonly . $maxlength . $tabindex . $append . '>';
+						$output .= '<input' . $input_class . ( ! empty( $id ) ? ' id="' . esc_attr( $id ) . '"' : '' ) . ' name="' . esc_attr( $name ) . '" type="' . esc_attr( $type ) . '" value="' . esc_attr( $value ) . '"' . $placeholder . $readonly . $minlength . $maxlength . $tabindex . $append . '>';
 
 						if ( ! empty( $input_before ) || ! empty( $input_after ) ) {
 							if ( ! empty( $input_after ) ) {
@@ -386,12 +400,14 @@ class CF7BS_Form_Field extends CF7BS_Component {
 			'rows'					=> 4,
 			'help_text'				=> '',
 			'size'					=> 'default', // default, large, small, mini
+			'grid_columns'			=> 12,
 			'form_layout'			=> 'default', // default, inline, horizontal
 			'form_label_width'		=> 2,
 			'form_breakpoint'		=> 'sm',
 			'mode'					=> 'default', // default, required, static, disabled
 			'status'				=> 'default', // default, success, warning, error
 			'readonly'				=> false,
+			'minlength'				=> false,
 			'maxlength'				=> false,
 			'tabindex'				=> false,
 			'group_layout'			=> 'default', // default, inline, buttons
@@ -456,8 +472,8 @@ class CF7BS_Form_Field extends CF7BS_Component {
 		return $value;
 	}
 
-	private function get_column_width_classes( $label_column_width = 2, $breakpoint = 'sm' ) {
-		if ( $label_column_width > 11 || $label_column_width < 1 ) {
+	private function get_column_width_classes( $label_column_width = 2, $breakpoint = 'sm', $grid_columns = 12 ) {
+		if ( $label_column_width > $grid_columns - 1 || $label_column_width < 1 ) {
 			$label_column_width = 2;
 		}
 		if ( ! in_array( $breakpoint, array( 'xs', 'sm', 'md', 'lg' ) ) ) {
@@ -465,12 +481,12 @@ class CF7BS_Form_Field extends CF7BS_Component {
 		}
 		return array(
 			'label'		=> 'col-' . $breakpoint . '-' . $label_column_width,
-			'input'		=> 'col-' . $breakpoint . '-' . ( 12 - $label_column_width ),
+			'input'		=> 'col-' . $breakpoint . '-' . ( $grid_columns - $label_column_width ),
 		);
 	}
 
-	private function get_column_offset_class( $label_column_width = 2, $breakpoint = 'sm' ) {
-		if ( $label_column_width > 11 || $label_column_width < 1 ) {
+	private function get_column_offset_class( $label_column_width = 2, $breakpoint = 'sm', $grid_columns = 12 ) {
+		if ( $label_column_width > $grid_columns - 1 || $label_column_width < 1 ) {
 			$label_column_width = 2;
 		}
 		if ( ! in_array( $breakpoint, array( 'xs', 'sm', 'md', 'lg' ) ) ) {
