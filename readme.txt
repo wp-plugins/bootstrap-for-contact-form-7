@@ -8,8 +8,8 @@ Donate link:       http://leaves-and-love.net/wordpress-plugins/
 Contributors:      flixos90
 Requires at least: 3.6 
 Tested up to:      4.2
-Stable tag:        1.2.1
-Version:           1.2.1
+Stable tag:        1.2.2
+Version:           1.2.2
 License:           GPL v2 
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 Tags:              contact form 7, wpcf7, bootstrap, bootstrap 3, bootstrap framework, addon, css framework, contact form 7 addon, contact form, cf7bs, css
@@ -109,6 +109,9 @@ If you're a developer and you have some ideas to improve the plugin or to solve 
 
 == Changelog ==
 
+= 1.2.2 =
+* Fixed: CSS is now specific to the contact form to prevent conflicts
+
 = 1.2.1 =
 * Added: the captchar shortcode now supports an 'include_captchac' option to display the captcha image inline with the input field
 * Added: the textarea shortcode and all other text inputs now support an 'include_count' option to display their character count inline with them
@@ -203,7 +206,7 @@ The submit button can be aligned left, center or right to fit your form's desire
 
 = Inline Character Count =
 
-Contact Form 7 provides a `[count]` shortcode that renders a number showing how many characters have been entered or how many characters are remaining in a specific input field. Using it on its own looks kind of ugly though. But guess what, you can adjust that too by adding an option `include_count` to any text / email / url / tel / textarea input. You can optionally specify a value for that option as well which can consist of the positioning ('before' or 'after') and the count direction ('up' or 'down') of the counter. Just as a reminder, when choosing 'down', make sure you give the input element a maximum length, otherwise there is no point in having that counter. Example:
+Contact Form 7 provides a `[count]` shortcode that renders a number indicating how many characters have been entered or how many characters are remaining in a specific input field. Using it on its own looks kind of ugly though. But guess what, you can adjust that too by adding an option `include_count` to any text / email / url / tel / textarea input. You can optionally specify a value for that option as well which can consist of the positioning ('before' or 'after') and the count direction ('up' or 'down') of the counter. Just as a reminder, when choosing 'down', make sure you give the input element a maximum length, otherwise there is no point in having that counter. Example:
 
 	[text your-text maxlength:80 include_count:after:down]Your Text[/text]
 
@@ -213,7 +216,7 @@ By the way, have you read the information about input groups above? You can comb
 
 = Inline Captcha Image =
 
-If you've been using Contact Form 7 together with the [Really Simple CAPTCHA](https://wordpress.org/plugins/really-simple-captcha/) plugin, you are probably aware of the `[captchar]` (captcha input field) and `[captchac]` (captcha image) shortcodes it provides. You can still use them independently, but it probably looks nicer to show the captcha image ride beside its input field. To accomplish this, remove the `[captchac]` shortcode completely and instead add a new option `include_captchac` to the `[captchar]` shortcode. You can optionally give this option a value (either 'before' or 'after') to mark the location where the image should show up. Example:
+If you've been using Contact Form 7 together with the [Really Simple CAPTCHA](https://wordpress.org/plugins/really-simple-captcha/) plugin, you are probably aware of the `[captchar]` (captcha input field) and `[captchac]` (captcha image) shortcodes it provides. You can still use them independently, but it probably looks nicer to have the captcha image show up inline, right beside its input field. To accomplish this, remove the `[captchac]` shortcode completely and instead add a new option `include_captchac` to the `[captchar]` shortcode. You can optionally give this option a value (either 'before' or 'after') to mark the location where the image should show up. Example:
 
 	[captchar your-captcha include_captchac:before]Captcha[/captchar]
 
