@@ -1,0 +1,41 @@
+== Changelog ==
+
+= 1.2.2 =
+* Fixed: CSS is now specific to the contact form to prevent conflicts
+
+= 1.2.1 =
+* Added: the captchar shortcode now supports an 'include_captchac' option to display the captcha image inline with the input field
+* Added: the textarea shortcode and all other text inputs now support an 'include_count' option to display their character count inline with them
+* Enhanced: the default grid column count of Bootstrap can now be overridden using the form property 'grid_columns'
+* Enhanced: the textarea shortcode now supports 'input_before' and 'input_after' (content is displayed above / below the textarea)
+* Enhanced: the submit button size can now be adjusted separately from the rest of the form's size
+* Tweaked: captcha images now have their image size adjusted to the 'size' form property by default
+* Tweaked: `---` typed in the 'input_before' or 'input_after' option will render as a space in the frontend
+* Fixed: minlength and maxlength attributes are now honored by all text inputs and textareas
+
+= 1.2.0 =
+* Added: new CF7 count shortcode is now supported
+* Enhanced: form properties can now be modified without any code (i.e. without a filter); the properties can be defined in the new "Additional Settings" tab of Contact Form 7
+* Enhanced: textual inputs now support Bootstrap's input group feature
+* Enhanced: checkbox and radio types can now show an actual label; it is only used as the checkbox label if no option is provided
+* Tweaked: plugin now adheres to WordPress Coding Standards
+* Fixed: improved display method for captcha images
+* Fixed: textarea row attribute now honored
+* Fixed: free_text attribute on checkbox and radio types now honored
+* Fixed: form attribute 'group_type' now honored
+* Fixed: additional CF7 styles are now outputted in the head
+* Fixed: check if CF7 functions are available before calling them
+
+= 1.1.1 =
+* Fixed: exclusive option for checkbox now working
+* Fixed: default option for radio/checkbox now working
+* Fixed: PHP notice for radio/checkbox with only one option
+* Fixed: Captcha not valid message now only shows up once as it is supposed to
+
+= 1.1.0 =
+* Added: new attribute 'align' can be added to the submit button
+* Enhanced: submit button now positioned properly according to form layout
+* Fixed: select and radio/checkbox options now use the main plugin's `get_data_option` method
+
+= 1.0.0 =
+* First stable version
