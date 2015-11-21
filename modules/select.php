@@ -1,7 +1,7 @@
 <?php
 /**
  * @package CF7BS
- * @version 1.2.2
+ * @version 1.3.0
  * @author Felix Arntz <felix-arntz@leaves-and-love.net>
  */
 
@@ -37,9 +37,21 @@ function cf7bs_select_shortcode_handler( $tag ) {
 	}
 
 	$defaults = array();
+
+	$default_choice = $tag->get_default_option( null, 'multiple=1' );
+	foreach ( $default_choice as $value ) {
+		$key = array_search( $value, $values, true );
+		if ( false !== $key ) {
+			$defaults[] = (int) $key + 1;
+		}
+	}
+
 	if ( $matches = $tag->get_first_match_option( '/^default:([0-9_]+)$/' ) ) {
 		$defaults = explode( '_', $matches[1] );
 	}
+
+	$defaults = array_unique( $defaults );
+
 	$multiple = $tag->has_option( 'multiple' );
 	$include_blank = $tag->has_option( 'include_blank' );
 	$first_as_label = $tag->has_option( 'first_as_label' );
@@ -54,9 +66,11 @@ function cf7bs_select_shortcode_handler( $tag ) {
 
 	$empty_select = empty( $values );
 
+	$shifted = false;
 	if ( $empty_select || $include_blank ) {
 		array_unshift( $labels, '---' );
 		array_unshift( $values, '' );
+		$shifted = true;
 	} elseif ( $first_as_label ) {
 		$values[0] = '';
 	}
@@ -98,7 +112,7 @@ function cf7bs_select_shortcode_handler( $tag ) {
 			if ( ! $multiple && $get == esc_sql( $value ) ) {
 				$selected = $value;
 			}
-		} elseif( ! $empty_select && in_array( $key + 1, (array) $defaults ) ) {
+		} elseif ( ! $shifted && in_array( (int) $key + 1, (array) $defaults ) || $shifted && in_array( (int) $key, (array) $defaults ) ) {
 			if ( $multiple ) {
 				$selected[] = $value;
 			} else {
@@ -107,7 +121,7 @@ function cf7bs_select_shortcode_handler( $tag ) {
 		}
 	}
 
-	$field = new CF7BS_Form_Field( array(
+	$field = new CF7BS_Form_Field( cf7bs_apply_field_args_filter( array(
 		'name'				=> $tag->name,
 		'id'				=> $tag->get_option( 'id', 'id', true ),
 		'class'				=> $tag->get_class_option( $class ),
@@ -125,7 +139,7 @@ function cf7bs_select_shortcode_handler( $tag ) {
 		'status'			=> $status,
 		'tabindex'			=> $tag->get_option( 'tabindex', 'int', true ),
 		'wrapper_class'		=> $tag->name,
-	) );
+	), $tag->basetype, $tag->name ) );
 
 	$html = $field->display( false );
 

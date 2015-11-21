@@ -1,7 +1,7 @@
 <?php
 /**
  * @package CF7BS
- * @version 1.2.2
+ * @version 1.3.0
  * @author Felix Arntz <felix-arntz@leaves-and-love.net>
  */
 
@@ -53,9 +53,10 @@ function cf7bs_text_shortcode_handler( $tag ) {
 	if ( $tag_obj->has_option( 'placeholder' ) || $tag_obj->has_option( 'watermark' ) ) {
 		$placeholder = $value;
 		$value = '';
-	} elseif ( empty( $value ) ) {
-		$value = $tag_obj->get_default_option();
 	}
+
+	$value = $tag_obj->get_default_option( $value );
+
 	if ( wpcf7_is_posted() && isset( $_POST[ $tag_obj->name ] ) ) {
 		$value = stripslashes_deep( $_POST[ $tag_obj->name ] );
 	} elseif ( isset( $_GET ) && array_key_exists( $tag_obj->name, $_GET ) ) {
@@ -107,7 +108,7 @@ function cf7bs_text_shortcode_handler( $tag ) {
 		}
 	}
 
-	$field = new CF7BS_Form_Field( array(
+	$field = new CF7BS_Form_Field( cf7bs_apply_field_args_filter( array(
 		'name'				=> $tag_obj->name,
 		'id'				=> $tag_obj->get_option( 'id', 'id', true ),
 		'class'				=> $tag_obj->get_class_option( $class ),
@@ -130,7 +131,7 @@ function cf7bs_text_shortcode_handler( $tag ) {
 		'wrapper_class'		=> $tag_obj->name,
 		'input_before'		=> $input_before,
 		'input_after'		=> $input_after,
-	) );
+	), $tag_obj->basetype, $tag_obj->name ) );
 
 	$html = $field->display( false );
 

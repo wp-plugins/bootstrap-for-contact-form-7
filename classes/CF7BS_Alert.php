@@ -1,7 +1,7 @@
 <?php
 /**
  * @package CF7BS
- * @version 1.2.2
+ * @version 1.3.0
  * @author Felix Arntz <felix-arntz@leaves-and-love.net>
  */
 
@@ -23,12 +23,12 @@ class CF7BS_Alert extends CF7BS_Component {
 			if ( ! empty( $type ) ) {
 				$class .= ' alert-' . $type;
 			}
-			if ( $dismissable ) {
-				$class .= ' alert-dismissable';
+			if ( $dismissible ) {
+				$class .= ' alert-dismissible';
 			}
 
 			$output .= '<div class="' . esc_attr( $class ) . '"' . ( $hide ? ' style="display:none;"' : '' ) . '>';
-			if ( $dismissable ) {
+			if ( $dismissible ) {
 				$output .= '<button class="close" data-dismiss="alert" type="button">&times;</button>';
 			}
 		}
@@ -53,6 +53,14 @@ class CF7BS_Alert extends CF7BS_Component {
 	}
 
 	protected function validate_args( $args, $exclude = array() ) {
+		// back compat
+		if ( isset( $args['dismissable'] ) ) {
+			if ( ! isset( $args['dismissible'] ) ) {
+				$args['dismissible'] = $args['dismissable'];
+			}
+			unset( $args['dismissable'] );
+		}
+
 		$args = parent::validate_args( $args, $exclude );
 
 		return $args;
@@ -62,7 +70,7 @@ class CF7BS_Alert extends CF7BS_Component {
 		$defaults = array(
 			'type'			=> 'default',
 			'class'			=> '',
-			'dismissable'	=> false,
+			'dismissible'	=> false,
 			'hide'			=> false,
 		);
 		return apply_filters( 'cf7bs_bootstrap_alert_defaults', $defaults );
